@@ -14,3 +14,7 @@ class F1archiveSpider(scrapy.Spider):
                 'url': product.xpath(".//div[@class='td_module_1 td_module_wrap td-animation-stack']/h3[@class='entry-title td-module-title']/a/@href").get(),
 
             }
+
+            next_page_url = response.xpath('//div[(@class="page-nav td-pb-padding-side")]/a/@href')[-1].extract()
+
+            yield scrapy.Request(next_page_url, callback=self.parse)
